@@ -9,7 +9,6 @@ students = [
     {"id": 3, "code": "SV003", "name": "Le Van C", "email": "c@gmail.com", "age": 18}
 ]
 
-
 class Student(BaseModel):
     code: str = Field(..., min_length=1)
     name: str = Field(..., min_length=1)
@@ -17,9 +16,6 @@ class Student(BaseModel):
     age: int = Field(..., gt=0)
 
 
-# ==========================
-# CREATE
-# ==========================
 @app.post("/students", status_code=status.HTTP_201_CREATED)
 def create_student(student: Student):
     for s in students:
@@ -41,10 +37,6 @@ def create_student(student: Student):
         "data": new_student
     }
 
-
-# ==========================
-# READ ALL + SEARCH
-# ==========================
 @app.get("/students")
 def get_students(
     keyword: str | None = Query(None),
@@ -71,9 +63,6 @@ def get_students(
     return result
 
 
-# ==========================
-# READ DETAIL
-# ==========================
 @app.get("/students/{student_id}")
 def get_student(student_id: int):
     if student_id <= 0:
@@ -91,10 +80,6 @@ def get_student(student_id: int):
         detail="Student not found"
     )
 
-
-# ==========================
-# UPDATE
-# ==========================
 @app.put("/students/{student_id}")
 def update_student(student_id: int, student: Student):
     if student_id <= 0:
@@ -127,10 +112,6 @@ def update_student(student_id: int, student: Student):
         detail="Student not found"
     )
 
-
-# ==========================
-# DELETE
-# ==========================
 @app.delete("/students/{student_id}")
 def delete_student(student_id: int):
     if student_id <= 0:
